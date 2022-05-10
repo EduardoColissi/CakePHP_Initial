@@ -18,10 +18,14 @@
         <!-- Add plugin test suites here. -->
     </testsuites>
 
-    <!-- Load extension for fixtures -->
-    <extensions>
-        <extension class="Cake\TestSuite\Fixture\PHPUnitExtension"/>
-    </extensions>
+    <!-- Setup a listener for fixtures -->
+    <listeners>
+        <listener class="Cake\TestSuite\Fixture\FixtureInjector">
+            <arguments>
+                <object class="Cake\TestSuite\Fixture\FixtureManager"/>
+            </arguments>
+        </listener>
+    </listeners>
 
     <!-- Ignore vendor tests in code coverage reports -->
     <filter>

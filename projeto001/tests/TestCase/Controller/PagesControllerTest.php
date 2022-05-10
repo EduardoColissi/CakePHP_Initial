@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -16,19 +14,32 @@ declare(strict_types=1);
  */
 namespace App\Test\TestCase\Controller;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\TestSuite\Constraint\Response\StatusCode;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
+use Cake\TestSuite\IntegrationTestCase;
+use Cake\View\Exception\MissingTemplateException;
 
 /**
  * PagesControllerTest class
  *
  * @uses \App\Controller\PagesController
  */
-class PagesControllerTest extends TestCase
+class PagesControllerTest extends IntegrationTestCase
 {
-    use IntegrationTestTrait;
+    /**
+     * testMultipleGet method
+     *
+     * @return void
+     */
+    public function testMultipleGet()
+    {
+        $this->get('/');
+        $this->assertResponseOk();
+        $this->get('/');
+        $this->assertResponseOk();
+    }
 
     /**
      * testDisplay method
@@ -37,7 +48,6 @@ class PagesControllerTest extends TestCase
      */
     public function testDisplay()
     {
-        Configure::write('debug', true);
         $this->get('/pages/home');
         $this->assertResponseOk();
         $this->assertResponseContains('CakePHP');
@@ -71,7 +81,7 @@ class PagesControllerTest extends TestCase
         $this->assertResponseFailure();
         $this->assertResponseContains('Missing Template');
         $this->assertResponseContains('Stacktrace');
-        $this->assertResponseContains('not_existing.php');
+        $this->assertResponseContains('not_existing.ctp');
     }
 
     /**
@@ -89,7 +99,7 @@ class PagesControllerTest extends TestCase
     /**
      * Test that CSRF protection is applied to page rendering.
      *
-     * @return void
+     * @reutrn void
      */
     public function testCsrfAppliedError()
     {
@@ -102,14 +112,14 @@ class PagesControllerTest extends TestCase
     /**
      * Test that CSRF protection is applied to page rendering.
      *
-     * @return void
+     * @reutrn void
      */
     public function testCsrfAppliedOk()
     {
         $this->enableCsrfToken();
         $this->post('/pages/home', ['hello' => 'world']);
 
-        $this->assertThat(403, $this->logicalNot(new StatusCode($this->_response)));
-        $this->assertResponseNotContains('CSRF');
+        $this->assertResponseCode(200);
+        $this->assertResponseContains('CakePHP');
     }
 }
