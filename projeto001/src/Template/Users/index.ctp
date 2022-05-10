@@ -32,4 +32,7 @@
             <?php echo $this->paginator->last('Última >> '); ?>
         </ul>
     </div>
+    <?php
+    echo $this->Html->link(('Adicionar Usuário'), ['action' => 'add'])
+    ?>
 </div>
