@@ -18,4 +18,11 @@ class UsersController extends AppController
         $usuarios = $this->paginate($this->Users);
         $this->set(compact('usuarios'));
     }
+
+    public function view($id = null)
+    {
+        $usuario = $this->Users->get($id);
+
+        $this->set(['usuario' => $usuario]);
+    }
 }
