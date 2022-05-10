@@ -26,4 +26,7 @@
             <td><?php echo $usuario->modified; ?></td>
         </tr>
     </table>
+    <?php 
+    echo $this->Html->link(('Voltar'), ['controller' => 'users', 'action' => 'index']);
+    ?>
 </div>

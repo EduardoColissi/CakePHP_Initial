@@ -17,7 +17,10 @@
                 <th><?php echo $usuario->id; ?></th>
                 <th><?php echo $usuario->name; ?></th>
                 <th><?php echo $usuario->email; ?></th>
-                <th>Ver Editar Apagar</th>
+                <th><?php
+                    echo $this->Html->link(('Ver'), ['action' => 'view', $usuario->id]);
+                    ?>
+                    Editar Apagar</th>
             </tr>
             <?php endforeach; ?>
         </tbody>
