@@ -35,9 +35,7 @@ class UsersTable extends Table
         ->requirePresence('username', 'create')
         ->notEmpty('username');
 
-        $validator
-        ->requirePresence('password', 'create')
-        ->notEmpty('password');
+      
 
         return $validator;
     }

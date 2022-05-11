@@ -36,6 +36,6 @@
         </ul>
     </div>
     <?php
-    echo $this->Html->link(('Adicionar Usuário'), ['action' => 'add'])
+    echo $this->Html->link(('Adicionar Usuário'), ['action' => 'edit'])
     ?>
 </div>

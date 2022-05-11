@@ -26,11 +26,48 @@ class UsersController extends AppController
         $this->set(['usuario' => $usuario]);
     }
 
-    public function add()
+    public function edit($id = null)
     {
-        $user = $this->Users->newEntity();
-        
-        if($this->request->is('post')){
+        //Ao editar um usuario, a senha deve estar em branco
+        //Ao salvar a edição, e o campo da senha estiver em branco, deve manter a mesma
+
+        if($id !== null){
+            $user = $this->Users->get($id);
+        }else{
+            $user = $this->Users->newEntity();
+        }
+        if($this->request->is(['post', 'put'])){
+            $data = $this->request->getData();
+            if($data['password'] == null){
+                unset($data['password']);
+            }
+            $user = $this->Users->patchEntity($user, $data);
+            if($this->Users->save($user)){
+                $this->Flash->success('Usuário editado!');
+                return $this->redirect(['action' => 'index']);
+            }else{
+                $this->Flash->error('Erro ao editar o usuário!');
+            }
+        }else{
+            $user->password = null;
+        }
+        $this->set(compact('user'));
+
+    }
+ // $2y$10$wH9AyMREho8D7Y6xR4RuV.F5xQ70pmqTSvk3ET1frVBaDrU/PYQY.
+    public function edit2($id = null)
+    {
+        $user = $this->Users->newEntity() || $user = $this->Users->get($id);
+
+        if($this->request->is('put')){
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if($this->Users->save($user)){
+                $this->Flash->success('Usuário editado!');
+                return $this->redirect(['action' => 'index']);
+            }else{
+                $this->Flash->error('Erro ao editar o usuário!');
+            }
+        }elseif($this->request->is('post')){
             $this->Users->patchEntity($user, $this->request->getData());
             
             if($this->Users->save($user)){
@@ -38,22 +75,6 @@ class UsersController extends AppController
                 return $this->redirect(['action' => 'index']);
             }else{
                 $this->Flash->success(__('Erro ao cadastrar usuário, revise os campos'));
-            }
-        }
-        $this->set(compact('user'));
-    }
-
-    public function edit($id = null)
-    {
-        $user = $this->Users->get($id);
-
-        if($this->request->is(['post', 'put'])){
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if($this->Users->save($user)){
-                $this->Flash->success('Usuário editado!');
-                return $this->redirect(['action' => 'index']);
-            }else{
-                $this->Flash->error('Erro ao editar o usuário!');
             }
         }
         $this->set(compact('user'));
