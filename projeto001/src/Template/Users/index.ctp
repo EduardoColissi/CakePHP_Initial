@@ -12,19 +12,19 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($usuarios as $usuario): ?>
-            <tr>
-                <th><?php echo $usuario->id; ?></th>
-                <th><?php echo $usuario->name; ?></th>
-                <th><?php echo $usuario->email; ?></th>
-                <th>
-                    <?php
+            <?php foreach ($usuarios as $usuario) : ?>
+                <tr>
+                    <th><?php echo $usuario->id; ?></th>
+                    <th><?php echo $usuario->name; ?></th>
+                    <th><?php echo $usuario->email; ?></th>
+                    <th>
+                        <?php
                         echo $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]);
                         echo $this->Html->link((' Editar '), ['action' => 'edit', $usuario->id]);
                         echo $this->Form->postLink((' Apagar '), ['action' => 'delete', $usuario->id], ['confirm' => 'Tem certeza que quer apagar o usuário?', $usuario->id]);
-                    ?>
-                </th>
-            </tr>
+                        ?>
+                    </th>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>

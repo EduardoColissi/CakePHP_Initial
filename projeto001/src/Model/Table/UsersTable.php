@@ -17,25 +17,23 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
     }
 
-    public function validationDefault(Validator $validator) 
+    public function validationDefault(Validator $validator)
     {
         $validator
-        ->integer('id')
-        ->allowEmpty('id', 'create');
+            ->integer('id')
+            ->allowEmpty('id', 'create');
 
         $validator
-        ->requirePresence('name', 'create')
-        ->notEmpty('name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         $validator
-        ->requirePresence('email', 'create')
-        ->notEmpty('email');
+            ->requirePresence('email', 'create')
+            ->notEmpty('email');
 
         $validator
-        ->requirePresence('username', 'create')
-        ->notEmpty('username');
-
-      
+            ->requirePresence('username', 'create')
+            ->notEmpty('username');
 
         return $validator;
     }
